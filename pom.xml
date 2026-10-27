@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        Spring Boot Parent POM
+        Manages all dependency versions for us automatically.
+        We inherit sensible defaults (compiler plugin, etc.)
+    -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
+    <!--
+        Project Coordinates
+        group:artifact:version uniquely identifies this JAR
+        in the Maven ecosystem.
+    -->
+    <groupId>com.staymatch</groupId>
+    <artifactId>staymatch</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>staymatch</name>
+    <description>Smart PG and Rental Discovery Platform</description>
+
+    <properties>
+        <!-- Java version used to compile and run this project -->
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+
+        <!--
+            Spring Web
+            Provides REST API support via Spring MVC.
+            Includes an embedded Tomcat server so we can
+            run the application without deploying to a server.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--
+            Spring Data JPA
+            Provides the JPA abstraction layer and includes
+            Hibernate as the default ORM implementation.
+            Lets us use @Entity, JpaRepository, etc.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!--
+            PostgreSQL JDBC Driver
+            The low-level driver that lets Java talk to
+            a PostgreSQL database. Spring Boot auto-configures
+            the DataSource using application.yml settings.
+            scope=runtime means it is only needed at runtime, not compile time.
+        -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            Flyway Core
+            Database migration tool. We write versioned SQL
+            scripts (V1__, V2__, etc.) and Flyway runs them
+            in order, tracking which ones have already run.
+            This keeps our DB schema under version control.
+        -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <!--
+            Flyway PostgreSQL Support
+            Required for Flyway to work with PostgreSQL in Spring Boot 3.x.
+        -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+
+        <!--
+            Validation (Bean Validation / Hibernate Validator)
+            Provides annotations like @NotNull, @NotBlank,
+            @Min, @Max, @Size for validating request DTOs.
+            Used with @Valid on controller method parameters.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Test
+            Provides JUnit 5, Mockito, and Spring test
+            utilities for writing unit and integration tests.
+            scope=test means it is not included in the final JAR.
+        -->
+        
+        <!-- Authentication, authorization, sessions, and BCrypt support -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+                Spring Boot Maven Plugin
+                Packages the application as an executable
+                "fat JAR" containing all dependencies.
+                Run with: java -jar staymatch-0.0.1-SNAPSHOT.jar
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

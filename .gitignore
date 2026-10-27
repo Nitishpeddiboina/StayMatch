@@ -1,0 +1,79 @@
+﻿# Build output
+/target/
+/frontend/dist/
+**/node_modules/
+
+# IDE and editor files
+.idea/
+*.iml
+.vscode/
+*.eclipse
+*.suo
+*.user
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.env
+application-local.yml
+application-secret.yml
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs and temporary files
+*.log
+*.log.*
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+/logs/
+/log/
+/tmp/
+/temp/
+/temp-output/
+
+# Local uploads and generated runtime data
+/staymatch-uploads/
+
+# Database files, exports, and backups (keep versioned migrations)
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.backup
+*.bak
+*.sql.gz
+*.sql.zip
+# Common root-level plain SQL dump/backup names
+/dump.sql
+/backup.sql
+/*-dump.sql
+/*-backup.sql
+/*_dump.sql
+/*_backup.sql
+/dump_*.sql
+/backup_*.sql
+# Conventional local export directories
+/backups/
+/database-dumps/
+/db-dumps/
+/dumps/
+
+# Java build artifacts
+*.class
+*.jar
+*.war
+*.ear
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# PowerShell generated cache present in some local shells
+/Microsoft/Windows/PowerShell/ModuleAnalysisCache

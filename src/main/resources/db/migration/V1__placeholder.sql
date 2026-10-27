@@ -1,0 +1,19 @@
+-- ==============================================================
+-- V1__placeholder.sql
+--
+-- This is a placeholder migration to satisfy Flyway on startup.
+-- Flyway requires at least one migration file to exist.
+--
+-- The actual table creation (users, amenities, properties, etc.)
+-- will be added in the next development phase as V2__init_schema.sql
+--
+-- Flyway naming convention:
+--   V  = Versioned migration (runs once, never again)
+--   1  = Version number (must be increasing: V1, V2, V3...)
+--   __ = Double underscore separator (required)
+--   placeholder = Description (shown in flyway_schema_history table)
+--   .sql = File extension
+-- ==============================================================
+
+-- This comment-only file is intentionally empty.
+-- No tables are created in Phase 1 (Foundation only).

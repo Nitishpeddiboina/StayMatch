@@ -1,0 +1,93 @@
+# ==============================================================
+# StayMatch - application.yml
+#
+# This file configures the Spring Boot application.
+# YAML uses indentation (2 spaces) to represent nesting —
+# equivalent to spring.datasource.url=... in .properties format.
+# ==============================================================
+
+spring:
+
+  # ------------------------------------------------------------
+  # DataSource Configuration
+  # Spring Boot reads these values and automatically creates a
+  # DataSource bean (a pool of DB connections) using HikariCP.
+  # ------------------------------------------------------------
+  datasource:
+    url: jdbc:postgresql://localhost:5432/staymatch
+    username: postgres
+    # PASSWORD: Do NOT put your real password here.
+    # Set it as an environment variable: DB_PASSWORD=yourpassword
+    # Then reference it like this:
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  # ------------------------------------------------------------
+  # JPA / Hibernate Configuration
+  # Spring Data JPA uses Hibernate under the hood as the ORM.
+  # ------------------------------------------------------------
+  jpa:
+    hibernate:
+      # "validate" → Hibernate checks that your @Entity classes
+      # match the existing DB schema but does NOT create/alter tables.
+      # Flyway is responsible for managing the schema — not Hibernate.
+      # Other options (for reference only, do NOT use in production):
+      #   create       → drops and recreates tables on every startup
+      #   create-drop  → creates on start, drops on shutdown
+      #   update       → tries to alter tables (unpredictable, dangerous)
+      ddl-auto: validate
+    properties:
+      hibernate:
+        # Formats the SQL Hibernate sends to the DB in the console.
+        # Useful for learning and debugging. Set to false in production.
+        format_sql: true
+        # The PostgreSQL dialect tells Hibernate to generate
+        # PostgreSQL-compatible SQL syntax.
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Logs every SQL statement Hibernate executes.
+    # Very helpful for understanding what JPA is doing behind the scenes.
+    show-sql: true
+
+  # ------------------------------------------------------------
+  # Flyway Configuration
+  # Flyway manages our DB schema through versioned SQL scripts
+  # stored in src/main/resources/db/migration/
+  # ------------------------------------------------------------
+  flyway:
+    enabled: true
+    # If the flyway_schema_history table doesn't exist yet,
+    # Flyway will create it instead of throwing an error.
+    baseline-on-migrate: true
+    # The folder where Flyway looks for migration scripts.
+    locations: classpath:db/migration
+
+  servlet:
+    multipart:
+      max-file-size: ${STAYMATCH_PHOTO_MAX_FILE_SIZE:5MB}
+      max-request-size: ${STAYMATCH_PHOTO_MAX_REQUEST_SIZE:50MB}
+
+staymatch:
+  photos:
+    # Relative to the backend working directory and outside src/; override to use another local volume.
+    storage-directory: ${STAYMATCH_PHOTO_STORAGE_DIRECTORY:./staymatch-uploads/property-photos}
+    max-file-size: ${STAYMATCH_PHOTO_MAX_FILE_SIZE:5MB}
+    max-files-per-property: ${STAYMATCH_PHOTO_MAX_FILES_PER_PROPERTY:10}
+
+# ------------------------------------------------------------
+# Server Configuration
+# ------------------------------------------------------------
+server:
+  port: 8080
+
+# ------------------------------------------------------------
+# Logging Configuration
+# Controls how verbose the application's console output is.
+# ------------------------------------------------------------
+logging:
+  level:
+    # Shows Flyway migration activity
+    org.flywaydb: INFO
+    # Prevent Spring MVC DEBUG logs from including response bodies such as CSRF tokens
+    org.springframework.web: INFO
+    # Shows our own application logs
+    com.staymatch: DEBUG
